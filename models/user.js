@@ -14,7 +14,6 @@ const userSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      unique: true,
       trim: true,
       lowercase: true,
     },
@@ -46,7 +45,6 @@ const userSchema = new mongoose.Schema(
   },
   {
     minimize: false,
-    timestamps: true,
   }
 );
 
