@@ -17,7 +17,10 @@ async function dbConnect() {
       useUnifiedTopology: true,
     };
     cached.promise = mongoose
-      .connect(process.env.MONGODB_URI, opts)
+      .connect(
+        "mongodb+srv://mollika123654:fA88IGiD9oRMr3G6@cluster0.vyx313a.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+        opts
+      )
       .then((mongoose) => {
         return mongoose;
       });
