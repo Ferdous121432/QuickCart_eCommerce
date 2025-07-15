@@ -67,7 +67,7 @@ export const syncUserUpdate = inngest.createFunction(
     };
 
     await dbConnect();
-    await User.findByIdAndUpdate(userID, userData);
+    await User.findOneAndUpdate({ userID }, userData, { new: true });
   }
 );
 
@@ -85,6 +85,6 @@ export const syncUserDeletion = inngest.createFunction(
     let userID = id;
 
     await dbConnect();
-    await User.findByIdAndDelete(userID);
+    await User.findOneAndDelete({ userID });
   }
 );
