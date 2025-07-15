@@ -1,4 +1,9 @@
-import { inngest, syncUserCreation, syncUserDeletion } from "@/config/inngest";
+import {
+  inngest,
+  syncUserCreation,
+  syncUserDeletion,
+  syncUserUpdate,
+} from "@/config/inngest";
 import { serve } from "inngest/next";
 
 // Create an API that serves zero functions
