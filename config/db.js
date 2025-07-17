@@ -16,7 +16,7 @@ async function dbConnect() {
       useNewUrlParser: true,
     };
     cached.promise = mongoose
-      .connect(process.env.MONGODB_URI, opts)
+      .connect(process.env.MONGODB_URI, {})
       .then((mongoose) => {
         return mongoose;
       });

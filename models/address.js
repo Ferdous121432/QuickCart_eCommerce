@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const addressSchema = new mongoose.Schema({
-  userId: {
+  userID: {
     type: String,
     ref: "User",
     required: true,
@@ -38,6 +38,5 @@ const addressSchema = new mongoose.Schema({
 });
 
 const Address =
-  mongoose.model("Address", addressSchema) || mongoose.models.Address;
-
+  mongoose.models.Address || mongoose.model("Address", addressSchema);
 export default Address;

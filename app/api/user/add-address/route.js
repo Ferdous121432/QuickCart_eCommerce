@@ -10,12 +10,12 @@ export async function POST(request) {
     const { address } = await request.json();
     await dbConnect();
     const user = await User.findOne({ userID: userId });
-    if (!user) {
-      return NextResponse.json(
-        { success: false, message: "User not found" },
-        { status: 404 }
-      );
-    }
+    // if (!user) {
+    //   return NextResponse.json(
+    //     { success: false, message: "User not found" },
+    //     { status: 404 }
+    //   );
+    // }
     const newAddress = await Address.create({
       userID: userId,
       ...address,
