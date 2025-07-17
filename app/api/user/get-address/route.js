@@ -1,8 +1,8 @@
-import dbConnect from "@/lib/dbConnect";
 import { NextResponse } from "next/server";
 import { getAuth } from "@clerk/nextjs/server";
 import Address from "@/models/address";
 import User from "@/models/user";
+import dbConnect from "@/config/db";
 
 export async function GET(request) {
   try {
