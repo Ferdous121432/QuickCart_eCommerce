@@ -19,7 +19,6 @@ export const AppContextProvider = (props) => {
 
   const { user } = useUser();
   const { getToken } = useAuth();
-  console.log("user", user);
 
   const [products, setProducts] = useState([]);
   const [userData, setUserData] = useState(false);
@@ -27,7 +26,15 @@ export const AppContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
 
   const fetchProductData = async () => {
-    setProducts(productsDummyData);
+    // Fetch products from the API
+    try {
+      const response = await axios.get("/api/product/list");
+      console.log("Fetched products:", response.data.products);
+      setProducts(response.data.products || []);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      toast.error("Failed to fetch products");
+    }
   };
 
   const fetchUserData = async () => {
@@ -36,7 +43,7 @@ export const AppContextProvider = (props) => {
         setIsSeller(true);
       }
       const token = await getToken();
-
+      console.log("Fetching user data with token:", token);
       const { data } = await axios.get(`/api/user/data`, {
         headers: { Authorization: `Bearer ${token}` },
       });
