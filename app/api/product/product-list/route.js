@@ -16,7 +16,7 @@ export async function GET(request) {
     }
 
     await dbConnect();
-    const products = await Product.find({ userID: userId });
+    const products = await Product.find({});
     return NextResponse.json({ success: true, products }, { status: 200 });
   } catch (error) {
     return NextResponse.json(

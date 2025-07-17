@@ -15,15 +15,18 @@ const ProductList = () => {
   const [loading, setLoading] = useState(true);
 
   const fetchSellerProduct = async () => {
+    const token = await getToken();
     try {
-      const token = await getToken();
-      const data = await axios.get("/api/product/product-list", {
+      const response = await axios.get("/api/product/product-list", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log("Fetching products for seller:", response.data);
+      const data = response.data;
 
       if (data.success) {
+        console.log("Fetched products:", data.products);
         setProducts(data.products);
         setLoading(false);
       } else {
@@ -69,7 +72,7 @@ const ProductList = () => {
                     <td className="md:px-4 pl-2 md:pl-4 py-3 flex items-center space-x-3 truncate">
                       <div className="bg-gray-500/10 rounded p-2">
                         <Image
-                          src={product.image[0]}
+                          src={product?.images[0]}
                           alt="product Image"
                           className="w-16"
                           width={1280}
