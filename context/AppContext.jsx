@@ -39,15 +39,14 @@ export const AppContextProvider = (props) => {
 
   const fetchUserData = async () => {
     try {
-      if (user.publicMetadata.role === "seller") {
-        setIsSeller(true);
-      }
       const token = await getToken();
       console.log("Fetching user data with token:", token);
       const { data } = await axios.get(`/api/user/data`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-
+      if (user.publicMetadata.role === "seller") {
+        setIsSeller(true);
+      }
       if (data.success) {
         setUserData(data.user);
         setCartItems(data.user.cartItem || {});
@@ -70,6 +69,32 @@ export const AppContextProvider = (props) => {
       cartData[itemId] = 1;
     }
     setCartItems(cartData);
+    toast.success("Item added to cart");
+
+    // Update the cart in the backend
+    if (user) {
+      try {
+        const token = await getToken();
+        const response = await axios.post(
+          "/api/cart/update",
+          { cartData },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (response.data.success) {
+          toast.success("Cart updated successfully");
+        } else {
+          toast.error("Failed to update cart");
+        }
+      } catch (error) {
+        toast.error("An error occurred while updating the cart");
+        console.error("Error updating cart:", error);
+      }
+    }
   };
 
   const updateCartQuantity = async (itemId, quantity) => {
