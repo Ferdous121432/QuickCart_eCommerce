@@ -21,7 +21,7 @@ export async function POST(request) {
       ...address,
     });
 
-    NextResponse.json(
+    return NextResponse.json(
       {
         success: true,
         message: "Address added successfully",

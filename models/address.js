@@ -8,22 +8,22 @@ const addressSchema = new mongoose.Schema({
   },
   fullName: {
     type: String,
-    required: true,
+    // required: true,
     default: "",
   },
   phoneNumber: {
     type: String,
-    required: true,
+    // required: true,
     default: "",
   },
   area: {
     type: String,
-    required: true,
+    // required: true,
     default: "",
   },
   city: {
     type: String,
-    required: true,
+    // required: true,
     default: "",
   },
   state: {
