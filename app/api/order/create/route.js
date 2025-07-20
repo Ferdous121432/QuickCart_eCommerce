@@ -3,6 +3,7 @@ import { getAuth } from "@clerk/nextjs/server";
 import User from "@/models/user";
 import Product from "@/models/product";
 import { inngest } from "@/config/inngest";
+import dbConnect from "@/config/db";
 
 export async function POST(request) {
   try {
@@ -17,6 +18,9 @@ export async function POST(request) {
       );
     }
 
+    // Connect to the database
+    await dbConnect();
+
     //Calculate total amount
     const totalAmount = await items.reduce(async (totalPromise, item) => {
       const total = await totalPromise;
@@ -28,10 +32,9 @@ export async function POST(request) {
       return total + product.offerPrice * item.quantity;
     }, Promise.resolve(0));
 
-    // Connect to the database
+    // Send event to Inngest
     await inngest.send({
       name: "order/created",
-      event: "order/created",
       data: {
         userID: userId,
         items,
