@@ -21,6 +21,7 @@ export async function POST(request) {
     const totalAmount = await items.reduce(async (totalPromise, item) => {
       const total = await totalPromise;
       const product = await Product.findById(item._id);
+      console.log("First", product);
       if (!product) {
         throw new Error("Product not found");
       }

@@ -82,7 +82,7 @@ const OrderSummary = () => {
       if (data.success) {
         toast.success(data.message || "Order created successfully");
         setCartItems({});
-        router.push("/orders");
+        router.push("/my-orders");
       } else {
         toast.error(data.message || "Failed to create order");
       }
