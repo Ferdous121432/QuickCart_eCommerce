@@ -20,7 +20,7 @@ export async function POST(request) {
 
     //Calculate total amount
     const totalAmount = await items.reduce(async (total, item) => {
-      const product = await Product.findById(item.product);
+      const product = await Product.findOne({ _id: item.product });
       if (!product) {
         throw new Error("Product not found");
       }
