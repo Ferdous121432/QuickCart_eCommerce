@@ -48,7 +48,48 @@ const OrderSummary = () => {
     setIsDropdownOpen(false);
   };
 
-  const createOrder = async () => {};
+  const createOrder = async () => {
+    try {
+      // Validate selected address
+      if (!selectedAddress) {
+        return toast.error("Please select an address");
+      }
+
+      let cartItemsArray = Object.keys(cartItems).map((key) => ({
+        productId: key,
+        quantity: cartItems[key],
+      }));
+
+      cartItemsArray = cartItemsArray.filter((item) => item.quantity > 0);
+
+      if (cartItemsArray.length === 0) {
+        return toast.error("Your cart is empty");
+      }
+
+      const token = await getToken();
+
+      const { data } = await axios.post(
+        `/api/order/create`,
+        {
+          items: cartItemsArray,
+          address: selectedAddress,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      if (data.success) {
+        toast.success(data.message || "Order created successfully");
+        setCartItems({});
+        router.push("/orders");
+      } else {
+        toast.error(data.message || "Failed to create order");
+      }
+    } catch (error) {
+      console.error("Error creating order:", error);
+      toast.error("Failed to create order");
+    }
+  };
 
   useEffect(() => {
     if (user) {
