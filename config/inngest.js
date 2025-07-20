@@ -98,7 +98,7 @@ export const syncOrderCreation = inngest.createFunction(
   {
     id: "sync-order-creation",
     batchEvents: {
-      maxSize: 5,
+      maxSize: 40,
       timeout: "5s",
       maxWait: "10s",
     },
