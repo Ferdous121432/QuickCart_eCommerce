@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import dbConnect from "@/config/db";
 import { getAuth } from "@clerk/nextjs/server";
 import User from "@/models/user";
 import Product from "@/models/product";
@@ -19,17 +18,18 @@ export async function POST(request) {
     }
 
     //Calculate total amount
-    const totalAmount = await items.reduce(async (total, item) => {
+    const totalAmount = await items.reduce(async (totalPromise, item) => {
+      const total = await totalPromise;
       const product = await Product.findById(item._id);
       if (!product) {
         throw new Error("Product not found");
       }
-      const itemTotal = total + product.offerPrice * item.quantity;
-      return itemTotal;
-    }, 0);
+      return total + product.offerPrice * item.quantity;
+    }, Promise.resolve(0));
 
     // Connect to the database
     await inngest.send({
+      name: "order/created",
       event: "order/created",
       data: {
         userID: userId,
