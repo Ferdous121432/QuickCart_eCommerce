@@ -110,7 +110,12 @@ export const syncOrderCreation = inngest.createFunction(
     const orders = events.map((event) => {
       return {
         userID: event.data.userID,
-        items: event.data.items,
+        items: event.data.items.map((item) => ({
+          product: item.product, // Ensure 'product' field is present
+          quantity: item.quantity,
+          price: item.price,
+          // Add other required fields if necessary
+        })),
         address: event.data.address,
         totalAmount: event.data.totalAmount,
         date: event.data.date,
