@@ -56,7 +56,8 @@ const OrderSummary = () => {
       }
 
       let cartItemsArray = Object.keys(cartItems).map((key) => ({
-        productId: key,
+        // productId: key,
+        _id: key,
         quantity: cartItems[key],
       }));
 
