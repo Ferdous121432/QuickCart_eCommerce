@@ -47,7 +47,7 @@ export async function POST(request) {
     //clear cart after order creation
     const user = await User.findOne({ userID: userId });
     if (user) {
-      user.cartitem = {};
+      user.cartItem = {};
       await user.save();
 
       return NextResponse.json(
