@@ -3,7 +3,6 @@ import dbConnect from "@/config/db";
 import { getAuth } from "@clerk/nextjs/server";
 import User from "@/models/user";
 import Product from "@/models/product";
-import Order from "@/models/order";
 import { inngest } from "@/config/inngest";
 
 export async function POST(request) {
